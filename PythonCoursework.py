@@ -1,6 +1,7 @@
 from tkinter import *
 from random import *
 import time
+#Constants used throughout the program
 
 Birds = []
 left_bird = []
@@ -9,10 +10,20 @@ p=1
 initial_score = 0
 m=1
 loadstate = []
-# score = StringVar()
-# time = StringVar()
-# time.set("2:00")
-# score.set("Score:0")
+scoress = {}
+
+f = open("leaderboards.txt","r")
+data = f.read()
+data = data.strip()
+data = data.strip("\n")
+datas = data.split(",")
+datas.pop()
+for item in datas:
+    sep = item.index(":")
+    scoress[item[0:sep]] = item[sep+1:len(item)]
+
+print(scoress)
+
 
 
 
@@ -24,13 +35,15 @@ def MenuScreen():
      Sky.delete("all")
      Sky.pack_forget()
      if len(loadstate) == 0:
+         Menu.delete("all")
          Menu.pack()
 
-         Gameplay = Button(Menu,width=10,text="New Game",font = ("Arial",25),fg="orange",command = Gamespacecreate)
+         Gameplay = Button(Menu,width=10,text="New Game",font = ("Arial",25),fg="orange",command = nameandcontrol)
          wind1 = Menu.create_window(960,450,window=Gameplay)
          Leaderboards = Button(Menu,width=10,text="High Scores",font = ("Arial",25),fg = "orange",command = Displayleaders)
          wind2 = Menu.create_window(960,550,window=Leaderboards)
      else:
+        Menu.delete("all")
         Menu.pack()
 
         Gameplay = Button(Menu,width=10,text="New Game",font = ("Arial",25),fg="orange",command = Gamespacecreate)
@@ -43,23 +56,61 @@ def MenuScreen():
 
 def nameandcontrol():
     Menu.delete("all")
-    Prompt = Label(Menu,text = "Enter your nickname",font = ("Arial,25"))
-    prompwindow = Menu.create_window(960,200,window=prompwindow)
+    Prompt = Label(Menu,text = "Enter your nickname",font = ("Arial",25))
+    prompwindow = Menu.create_window(960,150,window=Prompt)
     nameentry = Entry(Menu)
     namewindow = Menu.create_window(960,300,window=nameentry)
-    Prompt2 = Label(Menu,text = "Pick your controls",font = ("Arial,25"))
-    prompwindow = Menu.create_window(960,200,window=prompwindow)
+    Prompt2 = Label(Menu,text = "Pick your controls",font = ("Arial",25))
+    prompwindow = Menu.create_window(960,400,window=Prompt2)
 
-    Gameplay = Button(Menu,width=10,text="Left and Right",font = ("Arial",25),fg="orange",command = leftandright)
-    wind1 = Menu.create_window(960,450,window=Gameplay)
-    Leaderboards = Button(Menu,width=10,text="A and D",font = ("Arial",25),fg = "orange",command = AandD)
-    wind2 = Menu.create_window(960,550,window=Leaderboards)
+    LorR = Button(Menu,width=10,text="Left and Right",font = ("Arial",25),fg="orange",command = leftandright)
+    choice1 = Menu.create_window(700,600,window=LorR)
+    AorD = Button(Menu,width=10,text="A and D",font = ("Arial",25),fg = "orange",command = AandD)
+    choice2 = Menu.create_window(1200,600,window=AorD)
+
+def leftandright():
+    window.bind("<Left>",left)
+    window.bind("<Right>",right)
+    Gamespacecreate()
+
+def AandD():
+    window.bind("<a>",left)
+    window.bind("<d>",right)
+    Gamespacecreate()
+
 
 
 
 
 def Displayleaders():
-    pass
+    global scoress
+    Menu.delete("all")
+    names = list(scoress.keys())
+    names.sort()
+    points = list(scoress.values())
+    points.sort(reverse=True)
+    highscores = [points[0],points[1],points[2]]
+    scorers=[]
+    for i in highscores:
+        for j in names:
+            if scoress[j] == i:
+                scorers.append(j)
+                break
+    print(scorers,highscores)
+    Title = Label(Menu,text = "LEADERBOARDS",font = ("Arial",50))
+    Titlewindow = Menu.create_window(960,100,window = Title)
+    Title1 = Label(Menu,text = scorers[0] + "   :    " + highscores[0],font = ("Arial",40),fg = "orange")
+    Titlewindow1 = Menu.create_window(960,400,window = Title1)
+    Title2 = Label(Menu,text = scorers[1] + "   :    " + highscores[1],font = ("Arial",40),fg = "orange")
+    Titlewindow2 = Menu.create_window(960,500,window = Title2)
+    Title3 = Label(Menu,text = scorers[2] + "   :    " + highscores[2],font = ("Arial",40),fg = "orange")
+    Titlewindow3 = Menu.create_window(960,600,window = Title3)
+    Backbutton = Button(Menu,text = "Back",font=("Arial",20),fg = "orange",command = MenuScreen)
+    Backbuttonwindow = Menu.create_window(100,800,window=Backbutton)
+
+
+
+
 
 
 
@@ -104,7 +155,47 @@ def down(event):
 
 
 def Cheats():
-    pass
+    global p
+    global m
+    global bullet
+    global t
+    global Cheat
+    if p==1:
+        p=0
+        m=0
+        boss = 0
+        bullet.append(0)
+        Cheatask = Label(Sky,text = "Enter Cheat",font = ("Arial",20))
+        Cheatwindow = Sky.create_window(960,300,window = Cheatask,tags = "illegal")
+        Cheat = Entry(Sky)
+        Chwindow = Sky.create_window(960,400,window = Cheat,tags = "illeagle")
+        Apply = Button(Sky,text = "Apply",font = ("Arial",20),command=Cheats)
+        Applywindow = Sky.create_window(960,500,window = Apply,tags = "eagleill")
+        pausebutton.configure(state=DISABLED)
+        while 1>0:
+            pass
+            if p == 1:
+                break
+            window.update()
+    else:
+        cheatcode = Cheat.get()
+        if cheatcode == "Scorepls":
+            Scoreupdate(10)
+        elif cheatcode == "Timepls":
+            t = 0
+            Countdown(t)
+        else:
+            pass
+        Sky.delete("illegal")
+        Sky.delete("illeagle")
+        Sky.delete("eagleill")
+        pausebutton.configure(state=NORMAL)
+        p=1
+        m=1
+        boss = 1
+        bullet.pop()
+
+
 
 
 
@@ -142,7 +233,8 @@ def Pausegame():
 
 
 def Bosskey(event):
-    window.destroy()
+    if boss == 1:
+        window.destroy()
 
 def Gamespacecreate():
     global Hunter
@@ -154,6 +246,7 @@ def Gamespacecreate():
     global pausebutton
     global p
     global Menu
+    Menu.delete("all")
     Menu.pack_forget()
     Sky.pack()
     Ground = Sky.create_rectangle(-100,1080,2020,780,fill = "green",outline = "green")
@@ -201,11 +294,11 @@ def Shoot(event):
         pass
 
 
-def Scoreupdate():    #argument here will determine what type of object was hit
+def Scoreupdate(a=1):    #argument here will determine what type of object was hit
     global Score
     global score
     global initial_score
-    initial_score+=1
+    initial_score+=a
     scor = "Score:" + str(initial_score)
     score.set(scor)
 
@@ -418,8 +511,6 @@ img = PhotoImage(file = "images/hunter.png")
 
 
 
-window.bind("<Left>",left)
-window.bind("<Right>",right)
 window.bind("<b>",Bosskey)
 window.bind("<space>",Shoot)
 
