@@ -204,6 +204,7 @@ def Cheats():
     global bullet
     global t
     global Cheat
+    global pierce
     if p == 1:
         p = 0
         m = 0
@@ -228,6 +229,8 @@ def Cheats():
         elif cheatcode == "Timepls":
             t = 0
             Countdown(t)
+        elif cheatcode == "Piercing":
+            pierce = 1
         else:
             pass
         Sky.delete("illegal")
@@ -265,16 +268,30 @@ def SaveandQuit():
     bullet.clear()
 
 
+def Quit():
+    global p
+    global q
+    global m
+    global bullet
+    q = 1
+    p = 1
+    m = 1
+    bullet.clear()
+
+
 def Pausegame():
     global pausebutton
     global p
     global m
     global bullet
     global Loadbutton
+    global Quitbutton
     if p == 1:
         pausebutton.configure(text="Unpause")
         Loadbutton = Button(Sky, text="Save and Quit", font=("Arial", 25), command=SaveandQuit)
-        Loadbuttonwindow = Sky.create_window(960, 540, window=Loadbutton)
+        Loadbuttonwindow = Sky.create_window(850, 540, window=Loadbutton)
+        Quitbutton = Button(Sky, text="Quit", font=("Arial", 25), command=Quit)
+        Quitbuttonwindow = Sky.create_window(1070, 540, window=Quitbutton)
         p = 0
         m = 0
         bullet.append(0)
@@ -291,15 +308,38 @@ def Pausegame():
     else:
         pausebutton.configure(text="Pause")
         Loadbutton.destroy()
+        Quitbutton.destroy()
         p = 1
         m = 1
         bullet.pop()
 
 
 def Bosskey(event):
-    global boss
-    if boss == 1:
-        window.destroy()
+    global p
+    global m
+    global bullet
+    global Work
+    if p == 1:
+        p = 0
+        m = 0
+        bullet.append(0)
+        #Work = Sky.create_image(960, 0, anchor=NW, image=codeimg, tags="work")
+        Sky.pack_forget()
+        Menu.pack()
+        Work = Menu.create_image(0, 0, anchor=NW, image=codeimg, tags="work")
+        while 1 > 0:
+            pass
+            if p == 1:
+                break
+            window.update()
+    else:
+        #Sky.delete("work")
+        Menu.delete("all")
+        Menu.pack_forget()
+        Sky.pack()
+        p = 1
+        m = 1
+        bullet.pop()
 
 
 def Gamespacecreate(nam, timee=0, scoreee=0):
@@ -339,7 +379,6 @@ def Gamespacecreate(nam, timee=0, scoreee=0):
     pausebutton.place(x=1720, y=50)
     Cheatbutton = Button(Sky, text="Cheats", command=Cheats)
     Cheatbutton.place(x=100, y=50)
-    print(Sky.bbox(Hunter))
     # Sky.bind("<Left>",left)
     # Sky.bind("<Right>",right)
     Gameinitialise(a)
@@ -366,13 +405,10 @@ def Shoot(event):
     global Sky
     global Hunter
     global bullet
-    print(Sky.bbox(Hunter))
     if len(bullet) == 0:
         # shootingbullet = Sky.create_oval(Sky.coords(Hunter)[0],Sky.coords(Hunter)[1],Sky.coords(Hunter)[0]+10,Sky.coords(Hunter)[1]+10,fill = "black")
         shootingbullet = Sky.create_image(int((Sky.bbox(Hunter)[2] + Sky.bbox(Hunter)[0])/2), Sky.bbox(Hunter)[1], anchor=NW, image=arrimg)
         bullet.append(shootingbullet)
-        print(Sky.bbox(shootingbullet))
-        print(1)
     else:
         pass
 
@@ -402,12 +438,15 @@ def Gameinitialise(starttime=0):
     global loadstate
     global q
     global initial_score
+    global pierce
+    window.bind("<b>", Bosskey)
     loadstate = []
     f3 = open("loadstate.txt", "w")
     f3.write("")
     f3.close()
     t = starttime
     q = 0
+    pierce = 0
     leftredBirds = []
     rightredbirds = []
     redBirds = []
@@ -561,7 +600,7 @@ def Gameinitialise(starttime=0):
                         blueBirds.append(Bird)
                     elif chance in [12, 13, 14]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1860, height, 1920, height+40, fill="grey")
+                        Bird = Sky.create_oval(1860, height, 1920, height+60, fill="grey")
                         rightgreyBirds.append(Bird)
                         greyBirds.append(Bird)
                     else:
@@ -711,11 +750,9 @@ def Gameinitialise(starttime=0):
         if len(bullet) != 0:
             bul = bullet[0]
             bulletcoord = Sky.bbox(bul)
-            print(bulletcoord)
             if bulletcoord[1] < 0:
                 Sky.delete(bul)
                 bullet.remove(bul)
-                print(2)
             else:
                 Sky.move(bul, 0, -15)
 
@@ -726,9 +763,12 @@ def Gameinitialise(starttime=0):
                 bircoord = Sky.coords(bir)
                 if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
                     Sky.delete(bir)
-                    Sky.delete(bul)
+                    if pierce == 0:
+                        Sky.delete(bul)
+                        bullet.remove(bul)
+                    else:
+                        pass
                     redBirds.remove(bir)
-                    bullet.remove(bul)
                     Scoreupdate(1)
                     break
                 else:
@@ -741,9 +781,12 @@ def Gameinitialise(starttime=0):
                 bircoord = Sky.coords(bir)
                 if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
                     Sky.delete(bir)
-                    Sky.delete(bul)
+                    if pierce == 0:
+                        Sky.delete(bul)
+                        bullet.remove(bul)
+                    else:
+                        pass
                     greenBirds.remove(bir)
-                    bullet.remove(bul)
                     Scoreupdate(2)
                     break
                 else:
@@ -756,9 +799,12 @@ def Gameinitialise(starttime=0):
                 bircoord = Sky.coords(bir)
                 if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
                     Sky.delete(bir)
-                    Sky.delete(bul)
+                    if pierce == 0:
+                        Sky.delete(bul)
+                        bullet.remove(bul)
+                    else:
+                        pass
                     blueBirds.remove(bir)
-                    bullet.remove(bul)
                     Scoreupdate(5)
                     break
                 else:
@@ -771,9 +817,12 @@ def Gameinitialise(starttime=0):
                 bircoord = Sky.coords(bir)
                 if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
                     Sky.delete(bir)
-                    Sky.delete(bul)
+                    if pierce == 0:
+                        Sky.delete(bul)
+                        bullet.remove(bul)
+                    else:
+                        pass
                     greyBirds.remove(bir)
-                    bullet.remove(bul)
                     Scoreupdate(-1)
                     break
                 else:
@@ -786,9 +835,12 @@ def Gameinitialise(starttime=0):
                 bircoord = Sky.coords(bir)
                 if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
                     Sky.delete(bir)
-                    Sky.delete(bul)
+                    if pierce == 0:
+                        Sky.delete(bul)
+                        bullet.remove(bul)
+                    else:
+                        pass
                     blackBirds.remove(bir)
-                    bullet.remove(bul)
                     Scoreupdate(-10)
                     break
                 else:
@@ -836,8 +888,10 @@ def Gameinitialise(starttime=0):
             backbuttonwindow = Sky.create_window(200, 700, window=backbutton)
             leaderbutton = Button(Sky, text="Leaderboards", fg="orange", command=Displayleaders, bg="#ADD8E6")
             leaderbuttonwindow = Sky.create_window(1700, 700, window=leaderbutton)
+            window.unbind("<b>")
         else:
             Sky.delete("all")
+            window.unbind("<b>")
             pausebutton.destroy()
             Cheatbutton.destroy()
             MenuScreen()
@@ -846,19 +900,20 @@ def Gameinitialise(starttime=0):
 window = Tk()
 window.geometry("1920x1080")
 window.title("StraightShootez")
-Menu = Canvas(window, width="1920", heigh="1080", bg="#1D3E60", bd=-2)
+
+Menu = Canvas(window, width="1920", heigh="1080", bg="#1D3E60", bd=-2) # Canvases used in the game
 Sky = Canvas(window, width="1920", heigh="1080", bg="#ADD8E6", bd=-2)
 
 
-score = StringVar()
+score = StringVar() # Variable strings used in the Game
 tim = StringVar()
 
 
-img = PhotoImage(file="images/archer.png")
+img = PhotoImage(file="images/archer.png") # Images used in the Game
 backimg = PhotoImage(file="background.png")
 arrimg = PhotoImage(file="images/arrow.png")
+codeimg = PhotoImage(file="images/bosskey.png")
 
-window.bind("<b>", Bosskey)
 window.bind("<space>", Shoot)
 
 # Gamespacecreate()
