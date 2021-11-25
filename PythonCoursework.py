@@ -262,7 +262,7 @@ def SaveandQuit():
     f4.close()
     p = 1
     m = 1
-    bullet.pop()
+    bullet.clear()
 
 
 def Pausegame():
@@ -431,18 +431,17 @@ def Gameinitialise(starttime=0):
                     chance = randint(1, 20)
                     if chance in [1, 4, 7, 11, 13, 14]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0 , height, 40, height+40, fill="red")
+                        Bird = Sky.create_oval(0, height, 80, height+80, fill="red")
                         # Bird.pack()
                         leftredBirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="green")
+                        Bird = Sky.create_oval(0, height, 60, height+60, fill="green")
                         leftgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     else:
                         pass
-
 
                 else:
                     chance = randint(1, 20)
@@ -450,13 +449,13 @@ def Gameinitialise(starttime=0):
                         number = len(Birds)
                         Bird = "Bird" + str(number)
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="red")
-                        #Bird.pack()
+                        Bird = Sky.create_oval(1840, height, 1920, height+80, fill="red")
+                        # Bird.pack()
                         rightredbirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="green")
+                        Bird = Sky.create_oval(1860, height, 1920, height+60, fill="green")
                         rightgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     else:
@@ -466,22 +465,22 @@ def Gameinitialise(starttime=0):
                 side = randint(1, 2)
                 if side == 1:
                     chance = randint(1, 20)
-                    if chance in [1, 4 ,7, 11, 15]:
+                    if chance in [1, 4, 7, 11, 15]:
                         height = randint(10, 300)
                         number = len(Birds)
                         Bird = "Bird" + str(number)
-                        Bird = Sky.create_oval(0, height, 40, height + 40, fill="red")
-                        #Bird.pack()
+                        Bird = Sky.create_oval(0, height, 80, height + 80, fill="red")
+                        # Bird.pack()
                         leftredBirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="green")
+                        Bird = Sky.create_oval(0, height, 60, height+60, fill="green")
                         leftgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     elif chance in [3, 6]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="blue")
+                        Bird = Sky.create_oval(0, height, 40, height+40, fill="yellow")
                         leftblueBirds.append(Bird)
                         blueBirds.append(Bird)
 
@@ -493,18 +492,18 @@ def Gameinitialise(starttime=0):
                         number = len(Birds)
                         Bird = "Bird" + str(number)
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="red")
-                        #Bird.pack()
+                        Bird = Sky.create_oval(1840, height, 1920, height+80, fill="red")
+                        # Bird.pack()
                         rightredbirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill = "green")
+                        Bird = Sky.create_oval(1860, height, 1920, height+60, fill="green")
                         rightgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     elif chance in [3, 6]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="blue")
+                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="yellow")
                         rightblueBirds.append(Bird)
                         blueBirds.append(Bird)
                     else:
@@ -518,23 +517,23 @@ def Gameinitialise(starttime=0):
                         number = len(Birds)
                         height = randint(10, 300)
                         Bird = "Bird" + str(number)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="red")
-                        #Bird.pack()
+                        Bird = Sky.create_oval(0, height, 80, height+80, fill="red")
+                        # Bird.pack()
                         leftredBirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="green")
+                        Bird = Sky.create_oval(0, height, 60, height+60, fill="green")
                         leftgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     elif chance in [3, 6]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="blue")
+                        Bird = Sky.create_oval(0, height, 40, height+40, fill="yellow")
                         leftblueBirds.append(Bird)
                         blueBirds.append(Bird)
                     elif chance in [12, 13, 14]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="grey")
+                        Bird = Sky.create_oval(0, height, 60, height+60, fill="grey")
                         leftgreyBirds.append(Bird)
                         greyBirds.append(Bird)
 
@@ -546,23 +545,23 @@ def Gameinitialise(starttime=0):
                         number = len(Birds)
                         Bird = "Bird" + str(number)
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="red")
-                        #Bird.pack()
+                        Bird = Sky.create_oval(1840, height, 1920, height+80, fill="red")
+                        # Bird.pack()
                         rightredbirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="green")
+                        Bird = Sky.create_oval(1860, height, 1920, height+60, fill="green")
                         rightgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     elif chance in [3, 6]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="blue")
+                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="yellow")
                         rightblueBirds.append(Bird)
                         blueBirds.append(Bird)
                     elif chance in [12, 13, 14]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="grey")
+                        Bird = Sky.create_oval(1860, height, 1920, height+40, fill="grey")
                         rightgreyBirds.append(Bird)
                         greyBirds.append(Bird)
                     else:
@@ -576,28 +575,28 @@ def Gameinitialise(starttime=0):
                         number = len(Birds)
                         height = randint(10, 300)
                         Bird = "Bird" + str(number)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="red")
-                        #Bird.pack()
+                        Bird = Sky.create_oval(0, height, 80, height+80, fill="red")
+                        # Bird.pack()
                         leftredBirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="green")
+                        Bird = Sky.create_oval(0, height, 60, height+60, fill="green")
                         leftgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     elif chance in [3, 6]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="blue")
+                        Bird = Sky.create_oval(0, height, 40, height+40, fill="yellow")
                         leftblueBirds.append(Bird)
                         blueBirds.append(Bird)
                     elif chance in [12, 13, 14]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill="grey")
+                        Bird = Sky.create_oval(0, height, 60, height+60, fill="grey")
                         leftgreyBirds.append(Bird)
                         greyBirds.append(Bird)
                     elif chance in [16, 17]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(0, height, 40, height+40, fill = "black")
+                        Bird = Sky.create_oval(0, height, 80, height+80, fill="black")
                         leftblackBirds.append(Bird)
                         blackBirds.append(Bird)
                     else:
@@ -608,13 +607,13 @@ def Gameinitialise(starttime=0):
                         number = len(Birds)
                         Bird = "Bird" + str(number)
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill = "red")
-                        #Bird.pack()
+                        Bird = Sky.create_oval(1840, height, 1920, height+80, fill="red")
+                        # Bird.pack()
                         rightredbirds.append(Bird)
                         redBirds.append(Bird)
                     elif chance in [2, 5, 8]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="green")
+                        Bird = Sky.create_oval(1860, height, 1920, height+60, fill="green")
                         rightgreenBirds.append(Bird)
                         greenBirds.append(Bird)
                     elif chance in [3, 6]:
@@ -624,23 +623,23 @@ def Gameinitialise(starttime=0):
                         blueBirds.append(Bird)
                     elif chance in [12, 13, 14]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="grey")
+                        Bird = Sky.create_oval(1860, height, 1920, height+60, fill="grey")
                         rightgreyBirds.append(Bird)
                         greyBirds.append(Bird)
                     elif chance in [16, 17]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="black")
+                        Bird = Sky.create_oval(1840, height, 1920, height+80, fill="black")
                         rightblackBirds.append(Bird)
                         blackBirds.append(Bird)
                     else:
                         pass
         if len(leftredBirds) != 0:
             for bir in leftredBirds:
-                 Sky.move(bir,6,0)
+                Sky.move(bir, 3, 0)
 
         if len(rightredbirds) != 0:
             for bir in rightredbirds:
-                Sky.move(bir,-6,0)
+                Sky.move(bir, -3, 0)
 
         if len(redBirds) != 0:
             for bir in redBirds:
@@ -651,66 +650,63 @@ def Gameinitialise(starttime=0):
 
         if len(leftgreenBirds) != 0:
             for gir in leftgreenBirds:
-                 Sky.move(gir,8,0)
+                Sky.move(gir, 4, 0)
 
         if len(rightgreenBirds) != 0:
             for gir in rightgreenBirds:
-                Sky.move(gir,-8,0)
+                Sky.move(gir, -4, 0)
 
         if len(greenBirds) != 0:
-             for gir in greenBirds:
-                 Birdcoord = Sky.coords(gir)
-                 if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
-                     Sky.delete(gir)
-                     greenBirds.remove(gir)
+            for gir in greenBirds:
+                Birdcoord = Sky.coords(gir)
+                if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
+                    Sky.delete(gir)
+                    greenBirds.remove(gir)
 
         if len(leftblueBirds) != 0:
             for gir in leftblueBirds:
-                 Sky.move(gir,8,0)
+                Sky.move(gir, 8, 0)
 
         if len(rightblueBirds) != 0:
             for gir in rightblueBirds:
-                Sky.move(gir,-8,0)
+                Sky.move(gir, -8, 0)
 
         if len(blueBirds) != 0:
-             for gir in blueBirds:
-                 Birdcoord = Sky.coords(gir)
-                 if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
-                     Sky.delete(gir)
-                     blueBirds.remove(gir)
+            for gir in blueBirds:
+                Birdcoord = Sky.coords(gir)
+                if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
+                    Sky.delete(gir)
+                    blueBirds.remove(gir)
 
         if len(leftgreyBirds) != 0:
             for gir in leftgreyBirds:
-                 Sky.move(gir,8,0)
+                Sky.move(gir, 4, 0)
 
         if len(rightgreyBirds) != 0:
             for gir in rightgreyBirds:
-                Sky.move(gir,-8,0)
+                Sky.move(gir, -4, 0)
 
         if len(greyBirds) != 0:
-             for gir in greyBirds:
-                 Birdcoord = Sky.coords(gir)
-                 if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
-                     Sky.delete(gir)
-                     greyBirds.remove(gir)
+            for gir in greyBirds:
+                Birdcoord = Sky.coords(gir)
+                if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
+                    Sky.delete(gir)
+                    greyBirds.remove(gir)
 
         if len(leftblackBirds) != 0:
             for gir in leftblackBirds:
-                 Sky.move(gir,8,0)
+                Sky.move(gir, 3, 0)
 
         if len(rightblackBirds) != 0:
             for gir in rightblackBirds:
-                Sky.move(gir,-8,0)
+                Sky.move(gir, -3, 0)
 
         if len(blackBirds) != 0:
-             for gir in blackBirds:
-                 Birdcoord = Sky.coords(gir)
-                 if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
-                     Sky.delete(gir)
-                     blackBirds.remove(gir)
-
-
-
+            for gir in blackBirds:
+                Birdcoord = Sky.coords(gir)
+                if Birdcoord[0] < 0 or Birdcoord[2] > 1920:
+                    Sky.delete(gir)
+                    blackBirds.remove(gir)
 
         if len(bullet) != 0:
             bul = bullet[0]
@@ -721,7 +717,7 @@ def Gameinitialise(starttime=0):
                 bullet.remove(bul)
                 print(2)
             else:
-                Sky.move(bul,0,-15)
+                Sky.move(bul, 0, -15)
 
         if len(bullet) != 0 and len(redBirds) != 0:
             bul = bullet[0]
@@ -768,7 +764,6 @@ def Gameinitialise(starttime=0):
                 else:
                     continue
 
-
         if len(bullet) != 0 and len(greyBirds) != 0:
             bul = bullet[0]
             bullcoord = Sky.bbox(bul)
@@ -799,30 +794,24 @@ def Gameinitialise(starttime=0):
                 else:
                     continue
 
-
-
-
-
-        t+=1
-
+        t += 1
         Countdown(t)
-
         time.sleep(0.01)
         window.update()
     else:
-        if q==0:
+        if q == 0:
             final_score = score.get()
             sepe = final_score.index(":")
             point = final_score[sepe+1:]
             name = name.strip("\n")
-            #scoress[name] = point
+            # scoress[name] = point
             if name in list(scoress.keys()):
                 if scoress[name] in list(scoress.values()):
                     if int(point) > int(scoress[name]):
-                        print(int(point),int(scoress[name]))
+                        print(int(point), int(scoress[name]))
                         scoress[name] = point
                         fileentry = name + ":" + point + ","
-                        f = open("leaderboards.txt","a")
+                        f = open("leaderboards.txt", "a")
                         f.write(fileentry)
                         f.close()
                     else:
@@ -830,7 +819,7 @@ def Gameinitialise(starttime=0):
             else:
                 scoress[name] = point
                 fileentry = name + ":" + point + ","
-                f = open("leaderboards.txt","a")
+                f = open("leaderboards.txt", "a")
                 f.write(fileentry)
                 f.close()
 
@@ -839,14 +828,14 @@ def Gameinitialise(starttime=0):
 
             pausebutton.destroy()
             Cheatbutton.destroy()
-            Gameover = Label(Sky,text = "Game Over",font = ("Arial",50),bg = "#ADD8E6",fg = "orange")
-            Gameoverwindow = Sky.create_window(960,100,window = Gameover)
-            fina_score = Label(Sky,text = "Your Score:" + point,font = ("Arial",25),bg = "#ADD8E6",fg = "orange")
-            fina_scorewindow = Sky.create_window(960,500,window = fina_score)
-            backbutton = Button(Sky,text = "Back",fg="orange",command = MenuScreen,bg = "#ADD8E6")
-            backbuttonwindow = Sky.create_window(200,700,window = backbutton)
-            leaderbutton = Button(Sky,text = "Leaderboards",fg="orange",command = Displayleaders,bg = "#ADD8E6")
-            leaderbuttonwindow = Sky.create_window(1700,700,window = leaderbutton)
+            Gameover = Label(Sky, text="Game Over", font=("Arial", 50), bg="#ADD8E6", fg="orange")
+            Gameoverwindow = Sky.create_window(960, 100, window=Gameover)
+            fina_score = Label(Sky, text="Your Score:" + point, font=("Arial", 25), bg="#ADD8E6", fg="orange")
+            fina_scorewindow = Sky.create_window(960, 500, window=fina_score)
+            backbutton = Button(Sky, text="Back", fg="orange", command=MenuScreen, bg="#ADD8E6")
+            backbuttonwindow = Sky.create_window(200, 700, window=backbutton)
+            leaderbutton = Button(Sky, text="Leaderboards", fg="orange", command=Displayleaders, bg="#ADD8E6")
+            leaderbuttonwindow = Sky.create_window(1700, 700, window=leaderbutton)
         else:
             Sky.delete("all")
             pausebutton.destroy()
@@ -854,55 +843,24 @@ def Gameinitialise(starttime=0):
             MenuScreen()
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 window = Tk()
 window.geometry("1920x1080")
 window.title("StraightShootez")
-Menu = Canvas(window,width = "1920",heigh = "1080",bg = "#1D3E60",bd=-2)
-Sky = Canvas(window,width = "1920",heigh = "1080",bg = "#ADD8E6",bd=-2)
-
-
-
+Menu = Canvas(window, width="1920", heigh="1080", bg="#1D3E60", bd=-2)
+Sky = Canvas(window, width="1920", heigh="1080", bg="#ADD8E6", bd=-2)
 
 
 score = StringVar()
 tim = StringVar()
 
 
-img = PhotoImage(file = "images/archer.png")
-backimg = PhotoImage(file = "background.png")
-arrimg = PhotoImage(file = "images/arrow.png")
+img = PhotoImage(file="images/archer.png")
+backimg = PhotoImage(file="background.png")
+arrimg = PhotoImage(file="images/arrow.png")
 
+window.bind("<b>", Bosskey)
+window.bind("<space>", Shoot)
 
-
-
-
-
-
-
-window.bind("<b>",Bosskey)
-window.bind("<space>",Shoot)
-
-#Gamespacecreate()
+# Gamespacecreate()
 MenuScreen()
 window.mainloop()
