@@ -19,19 +19,20 @@ data = data.strip("\n")
 datas = data.split(",")
 datas.pop()
 for item in datas:
-    sep = item.index(":")
+    sep = 0
+    for a in range(len(item)):
+        if item[a] == ":":
+            sep = a
     scoress[item[0:sep]] = item[sep+1:len(item)]
 f1.close()
 
 f2 = open("loadstate.txt", "r")
 data = f2.read()
-print(data)
 if data == "":
     pass
 else:
     data = data.strip()
     data = data.strip("\n")
-    print(data)
     loadstate = data.split(",")
 f2.close()
 # have to append control state to load function
@@ -44,7 +45,7 @@ def MenuScreen():
     if len(loadstate) == 0:
         Menu.delete("all")
         Menu.pack()
-
+        Title = Menu.create_image(650, 100, anchor=NW, image=titleimg)
         Gameplay = Button(Menu, width=10, text="New Game", font=("Arial", 25), fg="orange", command=nameandcontrol, bg="#1D3E60")
         wind1 = Menu.create_window(960, 450, window=Gameplay)
         Leaderboards = Button(Menu, width=10, text="High Scores", font=("Arial", 25), fg="orange", command=Displayleaders, bg="#1D3E60")
@@ -52,7 +53,7 @@ def MenuScreen():
     else:
         Menu.delete("all")
         Menu.pack()
-
+        Title = Menu.create_image(650,80, anchor=NW, image=titleimg)
         Gameplay = Button(Menu, width=10, text="New Game", font=("Arial", 25), fg="orange", command=nameandcontrol, bg="#1D3E60")
         wind1 = Menu.create_window(960, 350, window=Gameplay)
         State = Button(Menu, width=10, text="Load Game", font=("Arial", 25), fg="orange", command=loadgame, bg="#1D3E60")
@@ -64,12 +65,12 @@ def MenuScreen():
 def nameandcontrol():
     global nameentry
     Menu.delete("all")
-    Prompt = Label(Menu, text="Enter your nickname", font=("Arial", 25), fg="orange", bg="#1D3E60")
-    prompwindow = Menu.create_window(960, 150, window=Prompt)
+    Prompt = Label(Menu, text="Enter your nickname", font=("Arial", 50), fg="orange", bg="#1D3E60")
+    prompwindow = Menu.create_window(960, 230, window=Prompt)
     nameentry = Entry(Menu)
     namewindow = Menu.create_window(960, 300, window=nameentry)
-    Prompt2 = Label(Menu, text="Pick your controls", font=("Arial", 25), fg="orange", bg="#1D3E60")
-    prompwindow = Menu.create_window(960, 400, window=Prompt2)
+    Prompt2 = Label(Menu, text="Pick your controls", font=("Arial", 55), fg="orange", bg="#1D3E60")
+    prompwindow = Menu.create_window(960, 500, window=Prompt2)
 
     LorR = Button(Menu, width=10, text="Left and Right", font=("Arial", 25), fg="orange", command=leftandright, bg="#1D3E60")
     choice1 = Menu.create_window(700, 600, window=LorR)
@@ -128,15 +129,12 @@ def Displayleaders():
     Sky.pack_forget()
     Menu.pack()
     names = list(scoress.keys())
-    print(scoress)
     names.sort()
-    print(names)
     points = list(scoress.values())
     numberpoints = []
     for a in points:
         numberpoints.append(int(a))
     numberpoints.sort(reverse=True)
-    print(numberpoints)
     highscores = [numberpoints[0], numberpoints[1], numberpoints[2]]
     scorers = []
     for i in highscores:
@@ -145,7 +143,6 @@ def Displayleaders():
                 scorers.append(j)
                 names.remove(j)
                 break
-    print(scorers, highscores)
     Title = Label(Menu, text="LEADERBOARDS", font=("Arial", 50), fg="orange", bg="#1D3E60")
     Titlewindow = Menu.create_window(960, 100, window=Title)
     Title1 = Label(Menu, text=scorers[0] + "   :    " + str(highscores[0]), font=("Arial", 40), fg="orange", bg="#1D3E60")
@@ -439,6 +436,8 @@ def Gameinitialise(starttime=0):
     global q
     global initial_score
     global pierce
+    global control
+    window.bind("<space>", Shoot)
     window.bind("<b>", Bosskey)
     loadstate = []
     f3 = open("loadstate.txt", "w")
@@ -657,7 +656,7 @@ def Gameinitialise(starttime=0):
                         greenBirds.append(Bird)
                     elif chance in [3, 6]:
                         height = randint(10, 300)
-                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="blue")
+                        Bird = Sky.create_oval(1880, height, 1920, height+40, fill="yellow")
                         rightblueBirds.append(Bird)
                         blueBirds.append(Bird)
                     elif chance in [12, 13, 14]:
@@ -860,7 +859,6 @@ def Gameinitialise(starttime=0):
             if name in list(scoress.keys()):
                 if scoress[name] in list(scoress.values()):
                     if int(point) > int(scoress[name]):
-                        print(int(point), int(scoress[name]))
                         scoress[name] = point
                         fileentry = name + ":" + point + ","
                         f = open("leaderboards.txt", "a")
@@ -876,7 +874,6 @@ def Gameinitialise(starttime=0):
                 f.close()
 
             Sky.delete("all")
-            print(scoress)
 
             pausebutton.destroy()
             Cheatbutton.destroy()
@@ -889,9 +886,23 @@ def Gameinitialise(starttime=0):
             leaderbutton = Button(Sky, text="Leaderboards", fg="orange", command=Displayleaders, bg="#ADD8E6")
             leaderbuttonwindow = Sky.create_window(1700, 700, window=leaderbutton)
             window.unbind("<b>")
+            window.unbind("<space>")
+            if control == 1:
+                window.unbind("<Left>")
+                window.unbind("<Right>")
+            else:
+                window.unbind("<a>")
+                window.unbind("<d>")
         else:
             Sky.delete("all")
             window.unbind("<b>")
+            window.unbind("<space>")
+            if control == 1:
+                window.unbind("<Left>")
+                window.unbind("<Right>")
+            else:
+                window.unbind("<a>")
+                window.unbind("<d>")
             pausebutton.destroy()
             Cheatbutton.destroy()
             MenuScreen()
@@ -913,8 +924,8 @@ img = PhotoImage(file="images/archer.png") # Images used in the Game
 backimg = PhotoImage(file="background.png")
 arrimg = PhotoImage(file="images/arrow.png")
 codeimg = PhotoImage(file="images/bosskey.png")
+titleimg = PhotoImage(file="images/title.png")
 
-window.bind("<space>", Shoot)
 
 # Gamespacecreate()
 MenuScreen()
