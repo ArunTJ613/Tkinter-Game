@@ -2,6 +2,7 @@ from tkinter import *
 from random import *
 import time
 # Constants used throughout the program
+# Game must only be run in fullscreen with the appropriate images in the image directory
 
 Birds = []
 left_bird = []
@@ -53,7 +54,7 @@ def MenuScreen():
     else:
         Menu.delete("all")
         Menu.pack()
-        Title = Menu.create_image(650,80, anchor=NW, image=titleimg)
+        Title = Menu.create_image(650, 80, anchor=NW, image=titleimg)
         Gameplay = Button(Menu, width=10, text="New Game", font=("Arial", 25), fg="orange", command=nameandcontrol, bg="#1D3E60")
         wind1 = Menu.create_window(960, 350, window=Gameplay)
         State = Button(Menu, width=10, text="Load Game", font=("Arial", 25), fg="orange", command=loadgame, bg="#1D3E60")
@@ -119,7 +120,7 @@ def loadgame():
     else:
         window.bind("<a>", left)
         window.bind("<d>", right)
-        Gamespacecreate(namm, timm, curscore)
+        Gamespacecreate(nam, timm, curscore)
 
 
 def Displayleaders():
@@ -160,7 +161,7 @@ def left(event):
     global Hunter
     global m
     Huntercoordinates = Sky.bbox(Hunter)
-    if Huntercoordinates[0] == 0 or m == 0:
+    if Huntercoordinates[0] < -20 or m == 0:
         pass
     else:
         Sky.move(Hunter, -14, 0)
@@ -292,11 +293,7 @@ def Pausegame():
         p = 0
         m = 0
         bullet.append(0)
-
-        # Cheatask = Label(Sky,text = "Enter a Cheat(even though you shouldnt)",font = ("Arial",20))
-        # Cheatask.pack(ipadx=800,ipady=400)
-        # Cheat = Entry(Sky)
-        # Cheat.place(x=910,y=540,width = 100,height = 20)
+        Cheatbutton.configure(state=DISABLED)
         while 1 > 0:
             pass
             if p == 1:
@@ -306,6 +303,7 @@ def Pausegame():
         pausebutton.configure(text="Pause")
         Loadbutton.destroy()
         Quitbutton.destroy()
+        Cheatbutton.configure(state=NORMAL)
         p = 1
         m = 1
         bullet.pop()
@@ -403,7 +401,6 @@ def Shoot(event):
     global Hunter
     global bullet
     if len(bullet) == 0:
-        # shootingbullet = Sky.create_oval(Sky.coords(Hunter)[0],Sky.coords(Hunter)[1],Sky.coords(Hunter)[0]+10,Sky.coords(Hunter)[1]+10,fill = "black")
         shootingbullet = Sky.create_image(int((Sky.bbox(Hunter)[2] + Sky.bbox(Hunter)[0])/2), Sky.bbox(Hunter)[1], anchor=NW, image=arrimg)
         bullet.append(shootingbullet)
     else:
@@ -446,6 +443,7 @@ def Gameinitialise(starttime=0):
     t = starttime
     q = 0
     pierce = 0
+    bullet = []
     leftredBirds = []
     rightredbirds = []
     redBirds = []
@@ -608,8 +606,8 @@ def Gameinitialise(starttime=0):
             if t % 100 == 0.0:
                 side = randint(1, 2)
                 if side == 1:
-                    chance = randint(1, 20)
-                    if chance in [1, 4, 7, 11, 15, 19, 20]:
+                    chance = randint(1, 22)
+                    if chance in [1, 4, 7, 11]:
                         number = len(Birds)
                         height = randint(10, 300)
                         Bird = "Bird" + str(number)
@@ -622,7 +620,7 @@ def Gameinitialise(starttime=0):
                         Bird = Sky.create_oval(0, height, 60, height+60, fill="green")
                         leftgreenBirds.append(Bird)
                         greenBirds.append(Bird)
-                    elif chance in [3, 6]:
+                    elif chance in [3, 6, 15, 21, 22]:
                         height = randint(10, 300)
                         Bird = Sky.create_oval(0, height, 40, height+40, fill="yellow")
                         leftblueBirds.append(Bird)
@@ -632,7 +630,7 @@ def Gameinitialise(starttime=0):
                         Bird = Sky.create_oval(0, height, 60, height+60, fill="grey")
                         leftgreyBirds.append(Bird)
                         greyBirds.append(Bird)
-                    elif chance in [16, 17]:
+                    elif chance in [16, 17, 19, 20]:
                         height = randint(10, 300)
                         Bird = Sky.create_oval(0, height, 80, height+80, fill="black")
                         leftblackBirds.append(Bird)
@@ -640,8 +638,8 @@ def Gameinitialise(starttime=0):
                     else:
                         pass
                 else:
-                    chance = randint(1, 20)
-                    if chance in [1, 4, 7, 11, 15, 19, 20]:
+                    chance = randint(1, 22)
+                    if chance in [1, 4, 7, 11]:
                         number = len(Birds)
                         Bird = "Bird" + str(number)
                         height = randint(10, 300)
@@ -654,7 +652,7 @@ def Gameinitialise(starttime=0):
                         Bird = Sky.create_oval(1860, height, 1920, height+60, fill="green")
                         rightgreenBirds.append(Bird)
                         greenBirds.append(Bird)
-                    elif chance in [3, 6]:
+                    elif chance in [3, 6, 15, 21, 22]:
                         height = randint(10, 300)
                         Bird = Sky.create_oval(1880, height, 1920, height+40, fill="yellow")
                         rightblueBirds.append(Bird)
@@ -664,7 +662,7 @@ def Gameinitialise(starttime=0):
                         Bird = Sky.create_oval(1860, height, 1920, height+60, fill="grey")
                         rightgreyBirds.append(Bird)
                         greyBirds.append(Bird)
-                    elif chance in [16, 17]:
+                    elif chance in [16, 17, 19, 20]:
                         height = randint(10, 300)
                         Bird = Sky.create_oval(1840, height, 1920, height+80, fill="black")
                         rightblackBirds.append(Bird)
@@ -760,7 +758,7 @@ def Gameinitialise(starttime=0):
             bullcoord = Sky.bbox(bul)
             for bir in redBirds:
                 bircoord = Sky.coords(bir)
-                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
+                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1]+10 < bircoord[3] and bullcoord[1]+30 > bircoord[1]:
                     Sky.delete(bir)
                     if pierce == 0:
                         Sky.delete(bul)
@@ -778,7 +776,7 @@ def Gameinitialise(starttime=0):
             bullcoord = Sky.bbox(bul)
             for bir in greenBirds:
                 bircoord = Sky.coords(bir)
-                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
+                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1]+10 < bircoord[3] and bullcoord[1]+30 > bircoord[1]:
                     Sky.delete(bir)
                     if pierce == 0:
                         Sky.delete(bul)
@@ -796,7 +794,7 @@ def Gameinitialise(starttime=0):
             bullcoord = Sky.bbox(bul)
             for bir in blueBirds:
                 bircoord = Sky.coords(bir)
-                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
+                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1]+10 < bircoord[3] and bullcoord[1]+30 > bircoord[1]:
                     Sky.delete(bir)
                     if pierce == 0:
                         Sky.delete(bul)
@@ -814,7 +812,7 @@ def Gameinitialise(starttime=0):
             bullcoord = Sky.bbox(bul)
             for bir in greyBirds:
                 bircoord = Sky.coords(bir)
-                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
+                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1]+10 < bircoord[3] and bullcoord[1]+30 > bircoord[1]:
                     Sky.delete(bir)
                     if pierce == 0:
                         Sky.delete(bul)
@@ -832,7 +830,7 @@ def Gameinitialise(starttime=0):
             bullcoord = Sky.bbox(bul)
             for bir in blackBirds:
                 bircoord = Sky.coords(bir)
-                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1] < bircoord[3] and bullcoord[3] > bircoord[1]:
+                if bullcoord[0] < bircoord[2] and bullcoord[2] > bircoord[0] and bullcoord[1]+10 < bircoord[3] and bullcoord[1]+30 > bircoord[1]:
                     Sky.delete(bir)
                     if pierce == 0:
                         Sky.delete(bul)
@@ -845,9 +843,9 @@ def Gameinitialise(starttime=0):
                 else:
                     continue
 
-        t += 1
+        t += 2
         Countdown(t)
-        time.sleep(0.01)
+        time.sleep(0.02)
         window.update()
     else:
         if q == 0:
@@ -887,6 +885,7 @@ def Gameinitialise(starttime=0):
             leaderbuttonwindow = Sky.create_window(1700, 700, window=leaderbutton)
             window.unbind("<b>")
             window.unbind("<space>")
+            bullet.clear()
             if control == 1:
                 window.unbind("<Left>")
                 window.unbind("<Right>")
@@ -897,6 +896,7 @@ def Gameinitialise(starttime=0):
             Sky.delete("all")
             window.unbind("<b>")
             window.unbind("<space>")
+            bullet.clear()
             if control == 1:
                 window.unbind("<Left>")
                 window.unbind("<Right>")
@@ -910,23 +910,24 @@ def Gameinitialise(starttime=0):
 
 window = Tk()
 window.geometry("1920x1080")
-window.title("StraightShootez")
+window.title("Archerz")
 
-Menu = Canvas(window, width="1920", heigh="1080", bg="#1D3E60", bd=-2) # Canvases used in the game
-Sky = Canvas(window, width="1920", heigh="1080", bg="#ADD8E6", bd=-2)
+
+# Canvases used in the game
+Menu = Canvas(window, width="1920", heigh="1080", bg="#1D3E60", bd=-2) # Menu Canvas
+Sky = Canvas(window, width="1920", heigh="1080", bg="#ADD8E6", bd=-2) # Game Canvas
 
 
 score = StringVar() # Variable strings used in the Game
 tim = StringVar()
 
+# Images used in the Game
+img = PhotoImage(file="images/archer.png") # royalty free Archer sprite
+backimg = PhotoImage(file="images/background.png") # background image
+arrimg = PhotoImage(file="images/arrow.png") # clipartarrow
+codeimg = PhotoImage(file="images/bosskey.png") # bosskey image
+titleimg = PhotoImage(file="images/title.png") # titleart
 
-img = PhotoImage(file="images/archer.png") # Images used in the Game
-backimg = PhotoImage(file="background.png")
-arrimg = PhotoImage(file="images/arrow.png")
-codeimg = PhotoImage(file="images/bosskey.png")
-titleimg = PhotoImage(file="images/title.png")
 
-
-# Gamespacecreate()
 MenuScreen()
 window.mainloop()
