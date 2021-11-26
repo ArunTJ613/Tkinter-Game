@@ -318,7 +318,6 @@ def Bosskey(event):
         p = 0
         m = 0
         bullet.append(0)
-        #Work = Sky.create_image(960, 0, anchor=NW, image=codeimg, tags="work")
         Sky.pack_forget()
         Menu.pack()
         Work = Menu.create_image(0, 0, anchor=NW, image=codeimg, tags="work")
@@ -328,7 +327,6 @@ def Bosskey(event):
                 break
             window.update()
     else:
-        #Sky.delete("work")
         Menu.delete("all")
         Menu.pack_forget()
         Sky.pack()
@@ -914,19 +912,19 @@ window.title("Archerz")
 
 
 # Canvases used in the game
-Menu = Canvas(window, width="1920", heigh="1080", bg="#1D3E60", bd=-2) # Menu Canvas
-Sky = Canvas(window, width="1920", heigh="1080", bg="#ADD8E6", bd=-2) # Game Canvas
+Menu = Canvas(window, width="1920", heigh="1080", bg="#1D3E60", bd=-2)  # Menu Canvas
+Sky = Canvas(window, width="1920", heigh="1080", bg="#ADD8E6", bd=-2)  # Game Canvas
 
 
-score = StringVar() # Variable strings used in the Game
+score = StringVar()  # Variable strings used in the Game
 tim = StringVar()
 
 # Images used in the Game
-img = PhotoImage(file="images/archer.png") # royalty free Archer sprite
-backimg = PhotoImage(file="images/background.png") # background image
-arrimg = PhotoImage(file="images/arrow.png") # clipartarrow
-codeimg = PhotoImage(file="images/bosskey.png") # bosskey image
-titleimg = PhotoImage(file="images/title.png") # titleart
+img = PhotoImage(file="images/archer.png")  # royalty free Archer sprite
+backimg = PhotoImage(file="images/background.png")  # background image
+arrimg = PhotoImage(file="images/arrow.png")  # clipartarrow
+codeimg = PhotoImage(file="images/bosskey.png")  # bosskey image
+titleimg = PhotoImage(file="images/title.png")  # titleart
 
 
 MenuScreen()
